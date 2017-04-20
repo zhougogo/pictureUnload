@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		
+	</head>
+	<body>
+		<input type="file" accept="image/*" ref='file' onchange="{ctr.onchange}" multiple="multiple" id="file"/>
+	</body>
+	<script>
+		if(typeof FileReader == undefined && new FileReader().readAsDataURL()){
+			alert("不支持filereader")
+		}else{
+			var img = document.createElement("img");
+			
+			document.body.appendChild(img);
+			
+			var reader = new FileReader();
+			
+			input = document.getElementById('file');
+			
+			var onchange = function(){
+				
+				var files = input.files;
+				
+				for(var k = 0;k < files.length;k++){
+					
+					var reg = /image\/\w+/;
+					
+					if(!reg.test(files[k].type)){
+						
+						console.log(files[k].name+'不是图像文件！')
+						
+					}else{
+						
+						console.log(files[k].name+'文件已上传')
+					}
+					
+
+				}
+					reader.readAsDataURL(files[0]);
+					
+					reader.onload = function(){
+						
+						img.src = this.result;
+				}
+			}
+			
+			input.onchange = onchange;
+		}
+	</script>
+</html>
